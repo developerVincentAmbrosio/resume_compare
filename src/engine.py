@@ -1,6 +1,4 @@
-import os
 import re
-from dotenv import load_dotenv
 from typing import Dict, Any
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -9,10 +7,8 @@ from langgraph.graph import StateGraph, START, END
 from models import GraphState, ResumeFeedback
 from parsers import resume_text_extraction
 
-load_dotenv()
-
-openai_api_key = os.getenv('OPENAI_API_KEY')
-model = ChatOpenAI(model="gpt-4o", temperature=0).with_structured_output(ResumeFeedback)
+model = ChatOpenAI(model="gpt-4o", 
+                   temperature=0).with_structured_output(ResumeFeedback)
 
 def cleaned_raw_text(text: str) -> str:
 
