@@ -1,9 +1,5 @@
-import os
 import streamlit as st
-from dotenv import load_dotenv
 from engine import resume_analyzer
-
-load_dotenv()
 
 # Setup layout environment
 st.set_page_config(layout="wide")
@@ -11,7 +7,7 @@ st.set_page_config(layout="wide")
 # Key configuration interface
 with st.sidebar:
     st.header("Settings")
-    api_key = os.environ["OPENAI_API_KEY"]
+    api_key = st.secrets["OPENAI_API_KEY"]
 
 # Dual column interface structure
 col_input, col_output = st.columns(2, gap="large")
@@ -27,7 +23,7 @@ with col_output:
     
     if analyze_btn:
         # Guard Clauses: Halt script early if fields are empty
-        if not os.environ.get("OPENAI_API_KEY"):
+        if "OPENAI_API_KEY" not in st.secrets:
             st.error("Please add your OpenAI API Key in the sidebar.")
             st.stop()
         if not job_desc.strip():
@@ -43,7 +39,7 @@ with col_output:
     
     if analyze_btn:
         # Guard Clauses
-        if not os.environ.get("OPENAI_API_KEY"):
+        if "OPENAI_API_KEY" not in st.secrets:
             st.error("Please add your OpenAI API Key in the sidebar.")
             st.stop()
         if not job_desc.strip():
